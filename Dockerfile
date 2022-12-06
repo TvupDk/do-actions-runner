@@ -1,9 +1,7 @@
 FROM ubuntu
 
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-# And afterwards whatever you like, for example:
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y \
---no-install-recommends install tzdata
+ENV TZ=Europe/Copenhagen
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN useradd -m actions
 RUN apt-get -y update && apt-get install -y \
