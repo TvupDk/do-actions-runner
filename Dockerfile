@@ -1,12 +1,13 @@
 FROM ubuntu
-ENV TZ=Europe/Copenhagen
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN useradd -m actions
 RUN apt-get -y update && apt-get install -y \
     apt-transport-https ca-certificates curl jq software-properties-common \
     && toolset="$(curl -sL https://raw.githubusercontent.com/actions/virtual-environments/main/images/linux/toolsets/toolset-2004.json)" \
     && common_packages=$(echo $toolset | jq -r ".apt.common_packages[]") && cmd_packages=$(echo $toolset | jq -r ".apt.cmd_packages[]") \
-    && for package in $common_packages $cmd_packages; do apt-get install -y --no-install-recommends $package; done
+    && for package in $common_packages $cmd_packages; do DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $package; done
 
 RUN \
     RUNNER_VERSION="$(curl -s -X GET 'https://api.github.com/repos/actions/runner/releases/latest' | jq -r '.tag_name|ltrimstr("v")')" \
