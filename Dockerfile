@@ -1,5 +1,5 @@
 FROM ubuntu
-ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Copenhagen
 
 RUN useradd -m actions
 RUN apt-get -y update && apt-get install -y \
@@ -7,9 +7,6 @@ RUN apt-get -y update && apt-get install -y \
     && toolset="$(curl -sL https://raw.githubusercontent.com/actions/virtual-environments/main/images/linux/toolsets/toolset-2004.json)" \
     && common_packages=$(echo $toolset | jq -r ".apt.common_packages[]") && cmd_packages=$(echo $toolset | jq -r ".apt.cmd_packages[]") \
     && for package in $common_packages $cmd_packages; do apt-get install -y --no-install-recommends $package; done
-
-RUN unlink /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/Copenhagen /etc/localtime
 
 RUN \
     RUNNER_VERSION="$(curl -s -X GET 'https://api.github.com/repos/actions/runner/releases/latest' | jq -r '.tag_name|ltrimstr("v")')" \
