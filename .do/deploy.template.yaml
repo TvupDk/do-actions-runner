@@ -3,16 +3,15 @@ spec:
   services:
   - dockerfile_path: Dockerfile
     envs:
-    - key: TOKEN
-      scope: RUN_TIME
-      type: SECRET
-      value: GitHub personal access token
     - key: OWNER
       scope: RUN_TIME
-      value: Repository Owner
+      value: TvupDK
     - key: REPO
       scope: RUN_TIME
-      value: Repository name
+      value: do-actions-runner
+    - key: ORG
+      scope: RUN_TIME
+      value: TvupDK
     git:
       branch: main
       repo_clone_url: https://github.com/ThewBear/do-actions-runner.git
