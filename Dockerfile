@@ -1,14 +1,11 @@
 FROM ubuntu
 
-ENV TZ=Europe/Copenhagen
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 RUN useradd -m actions
 RUN apt-get -y update && apt-get install -y \
     apt-transport-https ca-certificates curl jq software-properties-common \
     && toolset="$(curl -sL https://raw.githubusercontent.com/actions/virtual-environments/main/images/linux/toolsets/toolset-2004.json)" \
     && common_packages=$(echo $toolset | jq -r ".apt.common_packages[]") && cmd_packages=$(echo $toolset | jq -r ".apt.cmd_packages[]") \
-    && for package in $common_packages $cmd_packages; do apt-get install -y --no-install-recommends $package; done
+    && for package in $common_packages $cmd_packages; do apt-get install -y --force-yes --no-install-recommends $package; done
 
 RUN \
     RUNNER_VERSION="$(curl -s -X GET 'https://api.github.com/repos/actions/runner/releases/latest' | jq -r '.tag_name|ltrimstr("v")')" \
