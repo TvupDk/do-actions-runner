@@ -14,7 +14,7 @@ spec:
       value: TvupDK
     - key: TOKEN
       scope: RUN_TIME
-      value: sometoken
+      value:
     git:
       branch: main
       repo_clone_url: https://github.com/TvupDK/do-actions-runner.git

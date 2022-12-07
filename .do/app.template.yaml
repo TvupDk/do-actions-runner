@@ -1,0 +1,21 @@
+name: do-actions-runner
+services:
+  - dockerfile_path: Dockerfile
+    envs:
+      - key: OWNER
+        scope: RUN_TIME
+        value: TvupDK
+      - key: REPO
+        scope: RUN_TIME
+        value: do-actions-runner
+      - key: ORG
+        scope: RUN_TIME
+        value: TvupDK
+      - key: TOKEN
+        scope: RUN_TIME
+        value: sometoken
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: TvupDK/do-actions-runner
+    name: do-actions-runner
