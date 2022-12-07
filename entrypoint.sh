@@ -34,6 +34,4 @@ cleanup() {
 
 trap 'cleanup' SIGTERM
 
-./run.sh "$@" &
-
-wait $!
+./run.sh & wait $!
