@@ -12,6 +12,9 @@ spec:
     - key: ORG
       scope: RUN_TIME
       value: TvupDK
+    - key: TOKEN
+      scope: RUN_TIME
+      value: sometoken
     git:
       branch: main
       repo_clone_url: https://github.com/ThewBear/do-actions-runner.git
